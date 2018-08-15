@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import {
   PlaidErrorMetadata,
   PlaidErrorObject,
@@ -9,6 +9,8 @@ import {
   PlaidSuccessMetadata,
   PlaidConfig
 } from './interfaces';
+import { NgxPlaidLinkService } from './ngx-plaid-link.service';
+import { PlaidLinkHandler } from './ngx-plaid-link-handler';
 
 export interface ICustomWindow extends Window {
   Plaid: {
@@ -21,7 +23,7 @@ function getWindow(): any {
 }
 
 @Component({
-  selector: 'mr-ngx-plaid-link',
+  selector: 'mr-ngx-plaid-link-button',
   template: `
     <button
       (click)="onClick($event)"
@@ -33,7 +35,9 @@ function getWindow(): any {
   `,
   styles: []
 })
-export class NgxPlaidLinkComponent {
+export class NgxPlaidLinkButtonComponent implements AfterViewInit {
+
+  private plaidLinkHandler: PlaidLinkHandler;
 
   private defaultProps = {
     apiVersion: 'v2',
@@ -65,9 +69,6 @@ export class NgxPlaidLinkComponent {
   };
 
   disabledButton: boolean;
-  linkLoaded: boolean;
-
-  linkHandler: any;
 
   @Input() apiVersion?: string = this.defaultProps.apiVersion;
   @Input() clientName: string;
@@ -91,9 +92,36 @@ export class NgxPlaidLinkComponent {
     return getWindow();
   }
 
-  constructor() {
-    this.disabledButton = false;
-    this.linkLoaded = false;
+  constructor(private plaidLinkLoader: NgxPlaidLinkService) {
+    this.disabledButton = true;
+  }
+
+  ngAfterViewInit() {
+    const self = this;
+    this.plaidLinkLoader.createPlaid({
+      env: self.env,
+      key: self.publicKey,
+      product: self.product,
+      apiVersion: 'v2',
+      clientName: self.clientName,
+      onSuccess: function (public_token, metadata) {
+        self.onSuccess(public_token, metadata);
+      },
+      onExit: function (err, metadata) {
+        self.onExit(err, metadata);
+      },
+      onEvent: function (eventName, metadata) {
+        self.onEvent(eventName, metadata);
+      },
+      onLoad: function () {
+        self.onLoad();
+      },
+      token: self.token || null,
+      webhook: self.webhook || null
+    }).then((handler: PlaidLinkHandler) => {
+      this.disabledButton = false;
+      this.plaidLinkHandler = handler;
+    });
   }
 
   onScriptError() {
@@ -123,46 +151,15 @@ export class NgxPlaidLinkComponent {
 
   onClick($event) {
     this.Click.emit($event);
-    const self = this;
-    const config: PlaidConfig = {
-      env: self.env,
-      key: self.publicKey,
-      product: self.product,
-      apiVersion: 'v2',
-      clientName: self.clientName,
-      onSuccess: function (public_token, metadata) {
-        self.onSuccess(public_token, metadata);
-      },
-      onExit: function (err, metadata) {
-        self.onExit(err, metadata);
-      },
-      onEvent: function (eventName, metadata) {
-        self.onEvent(eventName, metadata);
-      },
-      onLoad: function () {
-        self.onLoad();
-      }
-    };
-    // Set the optional items.
-    if (!!self.token) {
-      config.token = self.token;
-    }
-    if (!!self.webhook) {
-      config.webhook = self.webhook;
-    }
-
-    this.linkHandler = this.nativeWindow.Plaid.create(config);
-
     // Open to a specific institution if necessary;
     const institution = this.institution || null;
-    if (this.linkHandler) {
-      this.linkHandler.open(institution);
+    if (this.plaidLinkHandler) {
+      this.plaidLinkHandler.open(institution);
     }
   }
 
   public onLoad($event = 'link_loaded') {
     this.Load.emit($event);
-    this.linkLoaded = true;
   }
 
 }

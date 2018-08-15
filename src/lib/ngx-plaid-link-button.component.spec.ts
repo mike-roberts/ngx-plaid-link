@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxPlaidLinkComponent } from './ngx-plaid-link.component';
+import { NgxPlaidLinkButtonComponent } from './ngx-plaid-link-button.component';
 
 describe('NgxPlaidLinkComponent', () => {
-  let component: NgxPlaidLinkComponent;
-  let fixture: ComponentFixture<NgxPlaidLinkComponent>;
+  let component: NgxPlaidLinkButtonComponent;
+  let fixture: ComponentFixture<NgxPlaidLinkButtonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxPlaidLinkComponent ]
+      declarations: [NgxPlaidLinkButtonComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxPlaidLinkComponent);
+    fixture = TestBed.createComponent(NgxPlaidLinkButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

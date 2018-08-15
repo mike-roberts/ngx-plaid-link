@@ -67,12 +67,83 @@ import { NgxPlaidLinkModule } from 'ngx-plaid-link';
 export class AppModule { }
 ```
 
-#### 4) Add to your component template
+#### 4a) The easy way, with the provided button
 
 ```html
-<mr-ngx-plaid-link env="sandbox" publicKey="YOURPUBLICKEY" institution="" (Success)="onPlaidSuccess($event)"
+<mr-ngx-plaid-link-button env="sandbox" publicKey="YOURPUBLICKEY" institution="" (Success)="onPlaidSuccess($event)"
   (Exit)="onPlaidExit($event)" (Load)="onPlaidLoad($event)" (Event)="onPlaidEvent($event)" className="launch-plaid-link-button"
-  buttonText="Link Your Bank Account" (Click)="onPlaidClick($event)"></mr-ngx-plaid-link>
+  buttonText="Link Your Bank Account" (Click)="onPlaidClick($event)"></mr-ngx-plaid-link-button>
+```
+
+#### 4b) The less easy way, implement yourself
+
+Since most of the functionality is through the service you can imlpement this yourself to customize to your needs further.
+
+```typescript
+import { Component, AfterViewInit } from '@angular/core';
+import {
+  PlaidErrorMetadata,
+  PlaidErrorObject,
+  PlaidEventMetadata,
+  PlaidOnEventArgs,
+  PlaidOnExitArgs,
+  PlaidOnSuccessArgs,
+  PlaidSuccessMetadata,
+  PlaidConfig
+} from './interfaces';
+import { NgxPlaidLinkService } from './ngx-plaid-link.service';
+import { PlaidLinkHandler } from './ngx-plaid-link-handler';
+
+export class ComponentThatImplementsPlaidLink implements AfterViewInit {
+  private plaidLinkHandler: PlaidLinkHandler;
+
+  private config: PlaidConfig = {
+    apiVersion: 'v2',
+    env: 'sandbox',
+    institution: null,
+    token: null,
+    webhook: '',
+    product: ['auth'],
+    key: 'YOURPUBLICKEY'
+  };
+
+  constructor(private plaidLinkService: NgxPlaidLinkService) {}
+
+  // Create and open programatically once the library is loaded.
+  ngAfterViewInit() {
+    this.plaidLinkHandler.createPlaid(Object.assign({}, config, {
+      onSuccess: (token, metadata) => this.onSuccess(token, metadata),
+      onExit: (error, metadata) => this.onExit(error, metadata),
+      onEvent: (eventName, metadata) => this.onEvent(eventName, metadata)
+    })).then((handler: PlaidLinkHandler) => {
+      this.plaidLinkHandler = handler;
+      this.open();
+    });
+  }
+
+  open() {
+    this.plaidLinkHandler.open();
+  }
+
+  exit() {
+    this.plaidLinkHandler.exit();
+  }
+
+  onSuccess(token, metadata) {
+    console.log("We got a token:", token);
+    console.log("We got metadata:", metadata);
+  }
+
+  onEvent(eventName, metadata) {
+    console.log("We got an event:", eventName);
+    console.log("We got metadata:", metadata);
+  }
+
+  onExit(error, metadata) {
+    console.log("We exited:", error);
+    console.log("We got metadata:", metadata);
+  }
+}
 ```
 
 #### Available Configuration
