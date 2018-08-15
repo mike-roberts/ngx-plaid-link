@@ -1,0 +1,12 @@
+{
+  "name": "ngx-plaid-link",
+  "version": "0.1.0",
+  "author": {
+    "name": "Mike Roberts",
+    "url": "https://github.com/mike-roberts"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  }
+}
