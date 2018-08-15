@@ -91,7 +91,6 @@ product | input | optional | string[] | ['auth'] | An array of the names of the 
 style | input | optional | object | An object of styles | An ngStyle object that can be used to apply styles and customize the plaid link button to match your app.
 token | input | optional | string | null | You can provide a token if you are re-authenticating or updating an item that has previously been linked.
 webhook | input | optional | string | null | You can provide a webhook for each item that Plaid will send events to.
- - | - | - | - | - | -
 Exit | output | required | function | n/a | Passes the result from the onExit function to your component
 Success  | output | required | function | n/a | Passes the result from the onSuccess function to your component
 Click | output | optional | function | n/a | Lets you act on the event when the button is clicked
