@@ -64,7 +64,6 @@ export interface PlaidConfig {
   apiVersion?: string;
   clientName?: string;
   env: string;
-  forceIframe?: boolean;
   key: string;
   onLoad?: Function;
   onSuccess: Function;

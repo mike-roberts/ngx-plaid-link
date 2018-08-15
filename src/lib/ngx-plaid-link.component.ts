@@ -10,8 +10,6 @@ import {
   PlaidConfig
 } from './interfaces';
 
-import { DOCUMENT } from '@angular/platform-browser';
-
 export interface ICustomWindow extends Window {
   Plaid: {
     create: Function;
@@ -43,13 +41,24 @@ export class NgxPlaidLinkComponent {
     institution: null,
     token: null,
     style: {
-      'padding': '6px 4px',
-      'outline': 'none',
-      'background': '#FFFFFF',
-      'border': '2px solid #F1F1F1',
+      'background-color': '#0085e4',
+      'transition-duration': '350ms',
+      'transition-property': 'background-color, box-shadow',
+      'transition-timing-function': 'ease-in-out',
+      '-webkit-appearance': 'button',
+      'border': '0',
       'border-radius': '4px',
+      'box-shadow': '0 2px 4px 0 rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.1)',
+      'color': '#fff',
+      'font-size': '20px',
+      'height': '56px',
+      'outline': '0',
+      'text-align': 'center',
+      'text-transform': 'none',
+      'padding': '0 2em',
+      'cursor': 'pointer'
     },
-    buttonText: 'Link Your Bank Account',
+    buttonText: 'Log In To Your Bank Account',
     webhook: '',
     product: ['auth'],
     className: 'plaid-link-button'
@@ -61,7 +70,7 @@ export class NgxPlaidLinkComponent {
   linkHandler: any;
 
   @Input() apiVersion?: string = this.defaultProps.apiVersion;
-  @Input() clientName?: string;
+  @Input() clientName: string;
   @Input() env?: string = this.defaultProps.env;
   @Input() institution?: string = this.defaultProps.institution;
   @Input() publicKey: string;
@@ -120,7 +129,7 @@ export class NgxPlaidLinkComponent {
       key: self.publicKey,
       product: self.product,
       apiVersion: 'v2',
-      forceIframe: true,
+      clientName: self.clientName,
       onSuccess: function (public_token, metadata) {
         self.onSuccess(public_token, metadata);
       },
@@ -135,9 +144,6 @@ export class NgxPlaidLinkComponent {
       }
     };
     // Set the optional items.
-    if (!!self.clientName) {
-      config.clientName = self.clientName;
-    }
     if (!!self.token) {
       config.token = self.token;
     }
