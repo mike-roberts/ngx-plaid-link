@@ -18,32 +18,7 @@ $ npm install ngx-plaid-link
 $ yarn add ngx-plaid-link
 ```
 
-#### 2) Add Plaid Link js to index.html
-
-```html
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <title>NgxPlaidLinkApp</title>
-  <base href="/">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-
-<body>
-  <app-root></app-root>
-  <!-- add this to your index.html file -->
-  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
-</body>
-
-</html>
-```
-
-
-#### 3) Import the NgxPlaidLinkModule
+#### 2) Import the NgxPlaidLinkModule
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -67,7 +42,7 @@ import { NgxPlaidLinkModule } from 'ngx-plaid-link';
 export class AppModule { }
 ```
 
-#### 4a) The easy way, with the provided button
+#### 3a) The easy way, with the provided button
 
 ```html
 <mr-ngx-plaid-link-button env="sandbox" publicKey="YOURPUBLICKEY" institution="" (Success)="onPlaidSuccess($event)"
@@ -75,7 +50,7 @@ export class AppModule { }
   buttonText="Link Your Bank Account" (Click)="onPlaidClick($event)"></mr-ngx-plaid-link-button>
 ```
 
-#### 4b) The less easy way, implement yourself
+#### 3b) The less easy way, implement yourself
 
 Since most of the functionality is through the service you can imlpement this yourself to customize to your needs further.
 
