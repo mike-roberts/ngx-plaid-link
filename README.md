@@ -68,10 +68,10 @@ import {
   PlaidOnExitArgs,
   PlaidOnSuccessArgs,
   PlaidSuccessMetadata,
-  PlaidConfig
-} from "./interfaces";
-import { NgxPlaidLinkService } from "./ngx-plaid-link.service";
-import { PlaidLinkHandler } from "./ngx-plaid-link-handler";
+  PlaidConfig,
+  NgxPlaidLinkService,
+  PlaidLinkHandler
+} from "ngx-plaid-link";
 
 export class ComponentThatImplementsPlaidLink implements AfterViewInit {
   private plaidLinkHandler: PlaidLinkHandler;
