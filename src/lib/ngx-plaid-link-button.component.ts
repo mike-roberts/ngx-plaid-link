@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  AfterViewInit
+} from "@angular/core";
 import {
   PlaidErrorMetadata,
   PlaidErrorObject,
@@ -8,9 +14,9 @@ import {
   PlaidOnSuccessArgs,
   PlaidSuccessMetadata,
   PlaidConfig
-} from './interfaces';
-import { NgxPlaidLinkService } from './ngx-plaid-link.service';
-import { PlaidLinkHandler } from './ngx-plaid-link-handler';
+} from "./interfaces";
+import { NgxPlaidLinkService } from "./ngx-plaid-link.service";
+import { PlaidLinkHandler } from "./ngx-plaid-link-handler";
 
 export interface ICustomWindow extends Window {
   Plaid: {
@@ -23,49 +29,51 @@ function getWindow(): any {
 }
 
 @Component({
-  selector: 'mr-ngx-plaid-link-button',
+  selector: "mr-ngx-plaid-link-button",
   template: `
     <button
       (click)="onClick($event)"
       [class]="className"
       [disabled]="disabledButton"
-      [ngStyle]="style">
-      {{buttonText}}
+      [ngStyle]="style"
+    >
+      {{ buttonText }}
     </button>
   `,
   styles: []
 })
 export class NgxPlaidLinkButtonComponent implements AfterViewInit {
-
   private plaidLinkHandler: PlaidLinkHandler;
 
   private defaultProps = {
-    apiVersion: 'v2',
-    env: 'sandbox',
+    apiVersion: "v2",
+    env: "sandbox",
     institution: null,
     token: null,
     style: {
-      'background-color': '#0085e4',
-      'transition-duration': '350ms',
-      'transition-property': 'background-color, box-shadow',
-      'transition-timing-function': 'ease-in-out',
-      '-webkit-appearance': 'button',
-      'border': '0',
-      'border-radius': '4px',
-      'box-shadow': '0 2px 4px 0 rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.1)',
-      'color': '#fff',
-      'font-size': '20px',
-      'height': '56px',
-      'outline': '0',
-      'text-align': 'center',
-      'text-transform': 'none',
-      'padding': '0 2em',
-      'cursor': 'pointer'
+      "background-color": "#0085e4",
+      "transition-duration": "350ms",
+      "transition-property": "background-color, box-shadow",
+      "transition-timing-function": "ease-in-out",
+      "-webkit-appearance": "button",
+      border: "0",
+      "border-radius": "4px",
+      "box-shadow":
+        "0 2px 4px 0 rgba(0,0,0,0.1), inset 0 1px 0 0 rgba(255,255,255,0.1)",
+      color: "#fff",
+      "font-size": "20px",
+      height: "56px",
+      outline: "0",
+      "text-align": "center",
+      "text-transform": "none",
+      padding: "0 2em",
+      cursor: "pointer"
     },
-    buttonText: 'Log In To Your Bank Account',
-    webhook: '',
-    product: ['auth'],
-    className: 'plaid-link-button'
+    buttonText: "Log In To Your Bank Account",
+    webhook: "",
+    product: ["auth"],
+    className: "plaid-link-button",
+    countryCodes: ["US"]
   };
 
   disabledButton: boolean;
@@ -81,6 +89,7 @@ export class NgxPlaidLinkButtonComponent implements AfterViewInit {
   @Input() style?: any = this.defaultProps.style;
   @Input() className?: string = this.defaultProps.className;
   @Input() buttonText?: string = this.defaultProps.buttonText;
+  @Input() countryCodes?: string[] = this.defaultProps.countryCodes;
 
   @Output() Event: EventEmitter<PlaidOnEventArgs> = new EventEmitter();
   @Output() Click: EventEmitter<any> = new EventEmitter();
@@ -98,34 +107,37 @@ export class NgxPlaidLinkButtonComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const self = this;
-    this.plaidLinkLoader.createPlaid({
-      env: self.env,
-      key: self.publicKey,
-      product: self.product,
-      apiVersion: 'v2',
-      clientName: self.clientName,
-      onSuccess: function (public_token, metadata) {
-        self.onSuccess(public_token, metadata);
-      },
-      onExit: function (err, metadata) {
-        self.onExit(err, metadata);
-      },
-      onEvent: function (eventName, metadata) {
-        self.onEvent(eventName, metadata);
-      },
-      onLoad: function () {
-        self.onLoad();
-      },
-      token: self.token || null,
-      webhook: self.webhook || null
-    }).then((handler: PlaidLinkHandler) => {
-      this.disabledButton = false;
-      this.plaidLinkHandler = handler;
-    });
+    this.plaidLinkLoader
+      .createPlaid({
+        env: self.env,
+        key: self.publicKey,
+        product: self.product,
+        apiVersion: "v2",
+        clientName: self.clientName,
+        countryCodes: self.countryCodes,
+        onSuccess: function(public_token, metadata) {
+          self.onSuccess(public_token, metadata);
+        },
+        onExit: function(err, metadata) {
+          self.onExit(err, metadata);
+        },
+        onEvent: function(eventName, metadata) {
+          self.onEvent(eventName, metadata);
+        },
+        onLoad: function() {
+          self.onLoad();
+        },
+        token: self.token || null,
+        webhook: self.webhook || null
+      })
+      .then((handler: PlaidLinkHandler) => {
+        this.disabledButton = false;
+        this.plaidLinkHandler = handler;
+      });
   }
 
   onScriptError() {
-    console.error('There was an issue loading the link-initialize.js script');
+    console.error("There was an issue loading the link-initialize.js script");
   }
 
   public onExit(error: PlaidErrorObject, metadata: PlaidErrorMetadata) {
@@ -158,8 +170,7 @@ export class NgxPlaidLinkButtonComponent implements AfterViewInit {
     }
   }
 
-  public onLoad($event = 'link_loaded') {
+  public onLoad($event = "link_loaded") {
     this.Load.emit($event);
   }
-
 }
