@@ -4,6 +4,7 @@ export interface PlaidSuccessMetadata {
   account: PlaidAccountObject;
   accounts: Array<PlaidAccountObject>;
   account_id: string;
+  public_token: string;
 }
 
 export interface PlaidOnSuccessArgs {
