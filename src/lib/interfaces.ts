@@ -1,7 +1,10 @@
 export interface PlaidSuccessMetadata {
   link_session_id: string;
   institution: PlaidInstitutionObject;
-  account: Array<PlaidAccountObject>;
+  account: PlaidAccountObject;
+  accounts: Array<PlaidAccountObject>;
+  account_id: string;
+  public_token: string;
 }
 
 export interface PlaidOnSuccessArgs {
