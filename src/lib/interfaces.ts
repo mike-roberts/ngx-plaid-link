@@ -92,4 +92,3 @@ export interface PlaidConfig {
   countryCodes?: string[];
   accountSubtypes?: PlaidAccountTypes
 }
-
