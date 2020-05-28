@@ -1,9 +1,20 @@
 {
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "ngx-plaid-link",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": {
     "name": "Mike Roberts",
     "url": "https://mikeroberts.engineer"
+  },
+  "scripts": {
+    "build": "ng-packagr -p package.json"
+  },
+  "ngPackage": {
+    "dest": "./dist/ngx-plaid-link",
+    "deleteDestPath": false,
+    "lib": {
+      "entryFile": "src/public_api.ts"
+    }
   },
   "license": "MIT",
   "homepage": "https://github.com/mike-roberts/ngx-plaid-link",
