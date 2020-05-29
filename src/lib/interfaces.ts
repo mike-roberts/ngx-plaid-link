@@ -63,20 +63,6 @@ export interface PlaidEventMetadata {
   timestamp: string;
 }
 
-export enum PlaidCreditAccountSubtypes {
-  CreditCard = 'credit card',
-  PayPal = 'paypal'
-}
-
-export enum PlaidLoanAccountSubtypes {
-  Student = 'student'
-}
-
-export interface PlaidAccountTypes {
-  credit?: Array<PlaidCreditAccountSubtypes>;
-  loan?: Array<PlaidLoanAccountSubtypes>;
-}
-
 export interface PlaidConfig {
   apiVersion?: string;
   clientName?: string;
@@ -90,5 +76,4 @@ export interface PlaidConfig {
   token?: string;
   webhook?: string;
   countryCodes?: string[];
-  accountSubtypes?: PlaidAccountTypes
 }
