@@ -11,7 +11,6 @@
   },
   "ngPackage": {
     "dest": "./dist/ngx-plaid-link",
-    "deleteDestPath": false,
     "lib": {
       "entryFile": "src/public_api.ts"
     }
@@ -26,7 +25,16 @@
     "url": "https://github.com/mike-roberts/ngx-plaid-link"
   },
   "peerDependencies": {
-    "@angular/common": "^8.0.0 || ^7.0.0 || ^6.0.0",
-    "@angular/core": "^8.0.0 || ^7.0.0 || ^6.0.0"
+    "@angular/common": "^9.0.0 || ^8.0.0 || ^7.0.0 || ^6.0.0",
+    "@angular/core": "^9.0.0 || ^8.0.0 || ^7.0.0 || ^6.0.0"
+  },
+  "devDependencies": {
+    "@angular/common": "^9.1.9",
+    "@angular/compiler": "^9.1.9",
+    "@angular/compiler-cli": "^9.1.9",
+    "@angular/core": "^9.1.9",
+    "@types/jasmine": "^3.5.10",
+    "ng-packagr": "^9.1.5",
+    "typescript": "~3.8.3"
   }
 }
