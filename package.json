@@ -9,7 +9,6 @@
   },
   "scripts": {
     "build": "ng-packagr -p package.json",
-    "postbuild": "cp package.json dist/ngx-plaid-link",
     "pack-dist": "npm pack ./dist/ngx-plaid-link",
     "publish-dist": "npm publish ./dist/ngx-plaid-link"
   },
