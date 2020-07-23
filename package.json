@@ -1,9 +1,22 @@
 {
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "ngx-plaid-link",
-  "version": "1.0.2",
+  "description": "Angular Plaid Link Directive & Button Component",
+  "version": "1.0.3",
   "author": {
     "name": "Mike Roberts",
     "url": "https://mikeroberts.engineer"
+  },
+  "scripts": {
+    "build": "ng-packagr -p package.json",
+    "pack-dist": "npm pack ./dist/ngx-plaid-link",
+    "publish-dist": "npm publish ./dist/ngx-plaid-link"
+  },
+  "ngPackage": {
+    "dest": "./dist/ngx-plaid-link",
+    "lib": {
+      "entryFile": "src/public_api.ts"
+    }
   },
   "license": "MIT",
   "homepage": "https://github.com/mike-roberts/ngx-plaid-link",
@@ -15,7 +28,16 @@
     "url": "https://github.com/mike-roberts/ngx-plaid-link"
   },
   "peerDependencies": {
-    "@angular/common": "^8.0.0 || ^7.0.0 || ^6.0.0",
-    "@angular/core": "^8.0.0 || ^7.0.0 || ^6.0.0"
+    "@angular/common": "^9.0.0 || ^8.0.0 || ^7.0.0 || ^6.0.0",
+    "@angular/core": "^9.0.0 || ^8.0.0 || ^7.0.0 || ^6.0.0"
+  },
+  "devDependencies": {
+    "@angular/common": "^9.1.9",
+    "@angular/compiler": "^9.1.9",
+    "@angular/compiler-cli": "^9.1.9",
+    "@angular/core": "^9.1.9",
+    "@types/jasmine": "^3.5.10",
+    "ng-packagr": "^9.1.5",
+    "typescript": "~3.8.3"
   }
 }
