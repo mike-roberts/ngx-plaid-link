@@ -1,28 +1,6 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  AfterViewInit
-} from "@angular/core";
-import {
-  PlaidErrorMetadata,
-  PlaidErrorObject,
-  PlaidEventMetadata,
-  PlaidOnEventArgs,
-  PlaidOnExitArgs,
-  PlaidOnSuccessArgs,
-  PlaidSuccessMetadata,
-  PlaidConfig
-} from "./interfaces";
-import { NgxPlaidLinkService } from "./ngx-plaid-link.service";
-import { PlaidLinkHandler } from "./ngx-plaid-link-handler";
-
-export interface ICustomWindow extends Window {
-  Plaid: {
-    create: Function;
-  };
-}
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { PlaidOnEventArgs, PlaidOnExitArgs, PlaidOnSuccessArgs } from './interfaces';
+import { ICustomWindow } from './ngx-plaid-link.directive';
 
 function getWindow(): any {
   return window;
@@ -31,25 +9,46 @@ function getWindow(): any {
 @Component({
   selector: "mr-ngx-plaid-link-button",
   template: `
-    <button
-      (click)="onClick($event)"
-      [class]="className"
-      [disabled]="disabledButton"
-      [ngStyle]="style"
+    <button ngxPlaidLink
+            [class]="className"
+            [ngStyle]="style"
+            [publicKey]="publicKey"
+            [clientName]="clientName"
+            [apiVersion]="apiVersion"
+            [env]="env"
+            [institution]="institution"
+            [product]="product"
+            [token]="token"
+            [webhook]="webhook"
+            [countryCodes]="countryCodes"
+            (Success)="onDirectiveSuccess($event)"
+            (Exit)="onDirectiveExit($event)"
+            (Load)="onDirectiveLoad($event)"
+            (Event)="onDirectiveEvent($event)"
+            (Click)="onDirectiveClick($event)"
     >
       {{ buttonText }}
     </button>
   `,
   styles: []
 })
-export class NgxPlaidLinkButtonComponent implements AfterViewInit {
-  private plaidLinkHandler: PlaidLinkHandler;
+export class NgxPlaidLinkButtonComponent {
 
+  @Input() clientName: string;
+  @Input() publicKey: string;
+  @Output() Event: EventEmitter<PlaidOnEventArgs> = new EventEmitter();
+  @Output() Success: EventEmitter<PlaidOnSuccessArgs> = new EventEmitter();
+  @Output() Click: EventEmitter<any> = new EventEmitter();
+  @Output() Load: EventEmitter<any> = new EventEmitter();
+  @Output() Exit: EventEmitter<PlaidOnExitArgs> = new EventEmitter();
   private defaultProps = {
     apiVersion: "v2",
     env: "sandbox",
     institution: null,
     token: null,
+    webhook: "",
+    product: ["auth"],
+    countryCodes: ["US"],
     style: {
       "background-color": "#0085e4",
       "transition-duration": "350ms",
@@ -70,107 +69,46 @@ export class NgxPlaidLinkButtonComponent implements AfterViewInit {
       cursor: "pointer"
     },
     buttonText: "Log In To Your Bank Account",
-    webhook: "",
-    product: ["auth"],
     className: "plaid-link-button",
-    countryCodes: ["US"]
   };
-
-  disabledButton: boolean;
-
   @Input() apiVersion?: string = this.defaultProps.apiVersion;
-  @Input() clientName: string;
   @Input() env?: string = this.defaultProps.env;
   @Input() institution?: string = this.defaultProps.institution;
-  @Input() publicKey: string;
   @Input() product?: Array<string> = this.defaultProps.product;
   @Input() token?: string = this.defaultProps.token;
   @Input() webhook?: string = this.defaultProps.webhook;
-  @Input() style?: any = this.defaultProps.style;
-  @Input() className?: string = this.defaultProps.className;
-  @Input() buttonText?: string = this.defaultProps.buttonText;
   @Input() countryCodes?: string[] = this.defaultProps.countryCodes;
+  @Input() style?: any = this.defaultProps.style;
+  @Input() buttonText?: string = this.defaultProps.buttonText;
+  @Input() className?: string = this.defaultProps.className;
 
-  @Output() Event: EventEmitter<PlaidOnEventArgs> = new EventEmitter();
-  @Output() Click: EventEmitter<any> = new EventEmitter();
-  @Output() Load: EventEmitter<any> = new EventEmitter();
-  @Output() Exit: EventEmitter<PlaidOnExitArgs> = new EventEmitter();
-  @Output() Success: EventEmitter<PlaidOnSuccessArgs> = new EventEmitter();
+  constructor() {}
 
   get nativeWindow(): ICustomWindow {
     return getWindow();
-  }
-
-  constructor(private plaidLinkLoader: NgxPlaidLinkService) {
-    this.disabledButton = true;
-  }
-
-  ngAfterViewInit() {
-    const self = this;
-    this.plaidLinkLoader
-      .createPlaid({
-        env: self.env,
-        key: self.publicKey,
-        product: self.product,
-        apiVersion: "v2",
-        clientName: self.clientName,
-        countryCodes: self.countryCodes,
-        onSuccess: function(public_token, metadata) {
-          self.onSuccess(public_token, metadata);
-        },
-        onExit: function(err, metadata) {
-          self.onExit(err, metadata);
-        },
-        onEvent: function(eventName, metadata) {
-          self.onEvent(eventName, metadata);
-        },
-        onLoad: function() {
-          self.onLoad();
-        },
-        token: self.token || null,
-        webhook: self.webhook || null
-      })
-      .then((handler: PlaidLinkHandler) => {
-        this.disabledButton = false;
-        this.plaidLinkHandler = handler;
-      });
   }
 
   onScriptError() {
     console.error("There was an issue loading the link-initialize.js script");
   }
 
-  public onExit(error: PlaidErrorObject, metadata: PlaidErrorMetadata) {
-    this.Exit.emit({
-      error: error,
-      metadata: metadata
-    });
+  onDirectiveSuccess(event: PlaidOnSuccessArgs) {
+    this.Success.emit(event);
   }
 
-  public onEvent(eventName: string, metadata: PlaidEventMetadata) {
-    this.Event.emit({
-      eventName: eventName,
-      metadata: metadata
-    });
+  onDirectiveExit(event: PlaidOnExitArgs) {
+    this.Exit.emit(event);
   }
 
-  public onSuccess(public_token: string, metadata: PlaidSuccessMetadata) {
-    this.Success.emit({
-      token: public_token,
-      metadata: metadata
-    });
+  onDirectiveLoad(event) {
+    this.Load.emit(event);
   }
 
-  onClick($event) {
-    this.Click.emit($event);
-    // Open to a specific institution if necessary;
-    const institution = this.institution || null;
-    if (this.plaidLinkHandler) {
-      this.plaidLinkHandler.open(institution);
-    }
+  onDirectiveEvent(event: PlaidOnEventArgs) {
+    this.Event.emit(event);
   }
 
-  public onLoad($event = "link_loaded") {
-    this.Load.emit($event);
+  onDirectiveClick(event) {
+    this.Click.emit(event);
   }
 }
