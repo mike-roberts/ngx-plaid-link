@@ -106,7 +106,7 @@ export class ComponentThatImplementsPlaidLink implements AfterViewInit {
 
   // Create and open programatically once the library is loaded.
   ngAfterViewInit() {
-    this.plaidLinkHandler
+    this.plaidLinkService
       .createPlaid(
         Object.assign({}, config, {
           onSuccess: (token, metadata) => this.onSuccess(token, metadata),
