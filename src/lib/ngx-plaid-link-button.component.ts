@@ -18,6 +18,7 @@ function getWindow(): any {
             [env]="env"
             [institution]="institution"
             [product]="product"
+            [selectAccount]="false"
             [token]="token"
             [webhook]="webhook"
             [countryCodes]="countryCodes"
@@ -45,6 +46,7 @@ export class NgxPlaidLinkButtonComponent {
     apiVersion: "v2",
     env: "sandbox",
     institution: null,
+    selectAccount: false,
     token: null,
     webhook: "",
     product: ["auth"],
@@ -75,6 +77,7 @@ export class NgxPlaidLinkButtonComponent {
   @Input() env?: string = this.defaultProps.env;
   @Input() institution?: string = this.defaultProps.institution;
   @Input() product?: Array<string> = this.defaultProps.product;
+  @Input() selectAccount?: boolean = this.defaultProps.selectAccount;
   @Input() token?: string = this.defaultProps.token;
   @Input() webhook?: string = this.defaultProps.webhook;
   @Input() countryCodes?: string[] = this.defaultProps.countryCodes;

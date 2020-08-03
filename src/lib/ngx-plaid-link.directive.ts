@@ -41,6 +41,7 @@ export class NgxPlaidLinkDirective {
     apiVersion: "v2",
     env: "sandbox",
     institution: null,
+    selectAccount: false,
     token: null,
     webhook: "",
     product: ["auth"],
@@ -51,6 +52,7 @@ export class NgxPlaidLinkDirective {
   @Input() env?: string = this.defaultProps.env;
   @Input() institution?: string = this.defaultProps.institution;
   @Input() product?: Array<string> = this.defaultProps.product;
+  @Input() selectAccount?: boolean = this.defaultProps.selectAccount;
   @Input() token?: string = this.defaultProps.token;
   @Input() webhook?: string = this.defaultProps.webhook;
   @Input() countryCodes?: string[] = this.defaultProps.countryCodes;
@@ -72,6 +74,7 @@ export class NgxPlaidLinkDirective {
         onExit: (err, metadata) => this.onExit(err, metadata),
         onEvent: (eventName, metadata) => this.onEvent(eventName, metadata),
         onLoad: () => this.onLoad(),
+        selectAccount: this.selectAccount,
         token: this.token || null,
         webhook: this.webhook || null
       });

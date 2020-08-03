@@ -73,6 +73,7 @@ export interface PlaidConfig {
   onExit: Function;
   onEvent?: Function;
   product: Array<string>;
+  selectAccount?: boolean;
   token?: string;
   webhook?: string;
   countryCodes?: string[];
