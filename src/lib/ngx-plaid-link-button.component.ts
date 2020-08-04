@@ -18,7 +18,7 @@ function getWindow(): any {
             [env]="env"
             [institution]="institution"
             [product]="product"
-            [selectAccount]="false"
+            [selectAccount]="selectAccount"
             [token]="token"
             [webhook]="webhook"
             [countryCodes]="countryCodes"
