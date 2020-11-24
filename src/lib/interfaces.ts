@@ -76,4 +76,5 @@ export interface PlaidConfig {
   token?: string;
   webhook?: string;
   countryCodes?: string[];
+  receivedRedirectUri?: string;
 }
