@@ -36,7 +36,6 @@ function getWindow(): any {
 export class NgxPlaidLinkButtonComponent {
 
   @Input() clientName: string;
-  @Input() publicKey: string;
   @Output() Event: EventEmitter<PlaidOnEventArgs> = new EventEmitter();
   @Output() Success: EventEmitter<PlaidOnSuccessArgs> = new EventEmitter();
   @Output() Click: EventEmitter<any> = new EventEmitter();
@@ -48,6 +47,7 @@ export class NgxPlaidLinkButtonComponent {
     institution: null,
     selectAccount: false,
     token: null,
+    publicKey: null,
     webhook: "",
     product: ["auth"],
     countryCodes: ["US"],
@@ -73,6 +73,7 @@ export class NgxPlaidLinkButtonComponent {
     buttonText: "Log In To Your Bank Account",
     className: "plaid-link-button",
   };
+  @Input() publicKey?: string = this.defaultProps.publicKey;
   @Input() apiVersion?: string = this.defaultProps.apiVersion;
   @Input() env?: string = this.defaultProps.env;
   @Input() institution?: string = this.defaultProps.institution;

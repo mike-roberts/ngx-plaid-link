@@ -32,7 +32,7 @@ export class NgxPlaidLinkDirective {
   @Output() Success: EventEmitter<PlaidOnSuccessArgs> = new EventEmitter();
 
   @Input() clientName: string;
-  @Input() publicKey: string;
+  
 
   @HostBinding('disabled') disabledButton: boolean;
 
@@ -42,12 +42,14 @@ export class NgxPlaidLinkDirective {
     env: "sandbox",
     institution: null,
     selectAccount: false,
+    publicKey: null,
     token: null,
     webhook: "",
     product: ["auth"],
     countryCodes: ["US"]
   };
 
+  @Input() publicKey?: string = this.defaultProps.publicKey;
   @Input() apiVersion?: string = this.defaultProps.apiVersion;
   @Input() env?: string = this.defaultProps.env;
   @Input() institution?: string = this.defaultProps.institution;
