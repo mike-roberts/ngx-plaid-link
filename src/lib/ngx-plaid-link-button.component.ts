@@ -72,6 +72,8 @@ export class NgxPlaidLinkButtonComponent {
     },
     buttonText: "Log In To Your Bank Account",
     className: "plaid-link-button",
+    receivedRedirectUri: null,
+    isWebview: false
   };
   @Input() apiVersion?: string = this.defaultProps.apiVersion;
   @Input() env?: string = this.defaultProps.env;
@@ -84,6 +86,8 @@ export class NgxPlaidLinkButtonComponent {
   @Input() style?: any = this.defaultProps.style;
   @Input() buttonText?: string = this.defaultProps.buttonText;
   @Input() className?: string = this.defaultProps.className;
+  @Input() receivedRedirectUri?: string = this.defaultProps.receivedRedirectUri;
+  @Input() isWebview?: boolean = this.defaultProps.isWebview;
 
   constructor() {}
 
