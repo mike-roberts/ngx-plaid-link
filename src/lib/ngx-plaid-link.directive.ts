@@ -45,7 +45,9 @@ export class NgxPlaidLinkDirective {
     token: null,
     webhook: "",
     product: ["auth"],
-    countryCodes: ["US"]
+    countryCodes: ["US"],
+    receivedRedirectUri: null,
+    isWebview: false,
   };
 
   @Input() apiVersion?: string = this.defaultProps.apiVersion;
@@ -56,6 +58,9 @@ export class NgxPlaidLinkDirective {
   @Input() token?: string = this.defaultProps.token;
   @Input() webhook?: string = this.defaultProps.webhook;
   @Input() countryCodes?: string[] = this.defaultProps.countryCodes;
+  @Input() receivedRedirectUri?: string = this.defaultProps.receivedRedirectUri;
+  @Input() isWebview?: boolean = this.defaultProps.isWebview;
+
 
   constructor(private plaidLinkLoader: NgxPlaidLinkService) {
     this.disabledButton = true;
@@ -76,7 +81,9 @@ export class NgxPlaidLinkDirective {
         onLoad: () => this.onLoad(),
         selectAccount: this.selectAccount,
         token: this.token || null,
-        webhook: this.webhook || null
+        webhook: this.webhook || null,
+        receivedRedirectUri: this.receivedRedirectUri,
+        isWebview: this.isWebview
       });
     this.disabledButton = false;
     this.plaidLinkHandler = handler;
