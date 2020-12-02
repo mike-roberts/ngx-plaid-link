@@ -95,6 +95,7 @@ export class ComponentThatImplementsPlaidLink implements AfterViewInit {
     apiVersion: "v2",
     env: "sandbox",
     institution: null,
+    selectAccount: false,
     token: null,
     webhook: "",
     product: ["auth"],
@@ -161,6 +162,7 @@ This is all there in the types, but here they are for convenience.
 | product        | input        | optional          | string[] | ['auth']                      | An array of the names of the products you'd like to authorize. Available options are `transactions`, `auth`, and `identity`.        |
 | publicKey      | input        | required          | string   | null                          | The public key from your Plaid account _Make sure it's the public key and not the private key_                                      |
 | style          | input        | optional          | object   | An object of styles           | An ngStyle object that can be used to apply styles and customize the plaid link button to match your app.                           |
+| selectAccount          | input        | optional          | boolean   | false                          | Setting this to `TRUE` will allow the user to select their bank account from a list through the plaid modal. `FALSE` does not show the account list prompt.                           |
 | token          | input        | optional          | string   | null                          | You can provide a token if you are re-authenticating or updating an item that has previously been linked.                           |
 | webhook        | input        | optional          | string   | null                          | You can provide a webhook for each item that Plaid will send events to.                                                             |
 | Exit           | output       | required          | function | n/a                           | Passes the result from the onExit function to your component                                                                        |
