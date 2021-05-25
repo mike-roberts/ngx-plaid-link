@@ -21,6 +21,7 @@ function getWindow(): any {
             [selectAccount]="selectAccount"
             [token]="token"
             [webhook]="webhook"
+            [receivedRedirectUri]="receivedRedirectUri"
             [countryCodes]="countryCodes"
             (Success)="onDirectiveSuccess($event)"
             (Exit)="onDirectiveExit($event)"
