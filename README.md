@@ -146,7 +146,22 @@ export class ComponentThatImplementsPlaidLink implements AfterViewInit {
 }
 ```
 
-#### Available Configuration
+## Angular Compatibility Chart
+
+The following chart can be used to determine what version of `ngx-plaid-link` should be used within your angular project. 
+  - <sub><sup>Note the omission of `angular@12` support within the chart; this is because there has never been a version of `ngx-plaid-link` published that officially supports `angular@12`. `ngx-plaid-link@1.0.3` should work fine with `angular@12` (albeit with peer dependency warnings during installation) but official advice is to upgrade your project to `angular@13` or later.</sup></sub>
+
+| angular version | ngx-plaid-link version |
+| --------------- | ---------------------- |
+| 6               | 1.0.3                  |
+| 7               | 1.0.3                  |
+| 8               | 1.0.3                  |
+| 9               | 1.0.3                  |
+| 10              | 1.0.3                  |
+| 11              | 1.0.3                  |
+| 13              | 13.0.0                 |
+
+## Available Configuration
 
 This is all there in the types, but here they are for convenience.
 
