@@ -123,7 +123,6 @@
       }
     }
   },
-  "defaultProject": "ngx-plaid-link-dev",
   "cli": {
     "analytics": false
   }
