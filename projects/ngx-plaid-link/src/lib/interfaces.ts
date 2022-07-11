@@ -1,10 +1,11 @@
 export interface PlaidSuccessMetadata {
   link_session_id: string;
-  institution: PlaidInstitutionObject;
+  institution?: PlaidInstitutionObject;
   account: PlaidAccountObject;
   accounts: Array<PlaidAccountObject>;
   account_id: string;
   public_token: string;
+  transfer_status?: 'COMPLETE' | 'INCOMPLETE';
 }
 
 export interface PlaidOnSuccessArgs {
@@ -20,9 +21,10 @@ export interface PlaidInstitutionObject {
 export interface PlaidAccountObject {
   id: string;
   name: string;
-  mask: string;
+  mask?: string;
   type: string;
   subtype: string;
+  verification_status?: string;
 }
 
 export interface PlaidErrorObject {
@@ -79,4 +81,8 @@ export interface PlaidConfig {
   countryCodes?: string[];
   receivedRedirectUri?: string;
   isWebview?: boolean;
+}
+
+export interface PlaidExitArgs {
+  force?: boolean;
 }

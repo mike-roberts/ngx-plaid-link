@@ -1,9 +1,8 @@
-import { PlaidConfig } from './interfaces';
+import { PlaidConfig, PlaidExitArgs } from './interfaces';
 
 declare let Plaid: any;
 
 export class PlaidLinkHandler {
-
   /**
    * Holds the Plaid Link instance.
    */
@@ -28,8 +27,14 @@ export class PlaidLinkHandler {
   /**
    * Closes the currently open Plaid Link window if any.
    */
-  public exit(): void {
+  public exit(options?: PlaidExitArgs): void {
     this.plaidLink.exit();
   }
 
+  /**
+   * Destroys Link Handler instance and removes all DOM artifacts.
+   */
+  public destroy(): void {
+    this.plaidLink.destroy();
+  }
 }

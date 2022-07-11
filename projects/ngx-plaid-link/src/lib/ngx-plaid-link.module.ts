@@ -5,13 +5,9 @@ import { NgxPlaidLinkService } from './ngx-plaid-link.service';
 import { NgxPlaidLinkDirective } from './ngx-plaid-link.directive';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  providers: [
-    NgxPlaidLinkService
-  ],
+  imports: [CommonModule],
+  providers: [NgxPlaidLinkService],
   declarations: [NgxPlaidLinkButtonComponent, NgxPlaidLinkDirective],
-  exports: [NgxPlaidLinkButtonComponent, NgxPlaidLinkDirective]
+  exports: [NgxPlaidLinkButtonComponent, NgxPlaidLinkDirective],
 })
-export class NgxPlaidLinkModule { }
+export class NgxPlaidLinkModule {}

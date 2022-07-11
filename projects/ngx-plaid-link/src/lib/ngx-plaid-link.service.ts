@@ -4,10 +4,9 @@ import { PlaidLinkHandler } from './ngx-plaid-link-handler';
 
 @Injectable()
 export class NgxPlaidLinkService {
+  private loaded?: Promise<void>;
 
-  private loaded: Promise<void>;
-
-  constructor() { }
+  constructor() {}
 
   /**
    * Create a Plaid Link instance as soon as Plaid Link has loaded.
@@ -33,7 +32,10 @@ export class NgxPlaidLinkService {
         script.onerror = (e: any) => reject(e);
         if (script.readyState) {
           script.onreadystatechange = () => {
-            if (script.readyState === 'loaded' || script.readyState === 'complete') {
+            if (
+              script.readyState === 'loaded' ||
+              script.readyState === 'complete'
+            ) {
               script.onreadystatechange = null;
               resolve();
             }
@@ -49,5 +51,4 @@ export class NgxPlaidLinkService {
 
     return this.loaded;
   }
-
 }
