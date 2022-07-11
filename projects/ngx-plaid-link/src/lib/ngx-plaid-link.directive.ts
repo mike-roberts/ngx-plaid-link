@@ -74,31 +74,31 @@ export class NgxPlaidLinkDirective {
   @Input() countryCodes?: string[] = this.defaultProps.countryCodes;
   @Input() receivedRedirectUri?: string = this.defaultProps.receivedRedirectUri;
 
-  constructor() {
+  constructor(private plaidLinkLoader: NgxPlaidLinkService) {
     this.disabledButton = true;
   }
 
   async ngOnInit() {
-    // let handler: PlaidLinkHandler = await this.plaidLinkLoader.createPlaid({
-    //   env: this.env,
-    //   key: this.publicKey,
-    //   product: this.product,
-    //   apiVersion: 'v2',
-    //   clientName: this.clientName,
-    //   countryCodes: this.countryCodes,
-    //   onSuccess: (public_token: string, metadata: any) =>
-    //     this.onSuccess(public_token, metadata),
-    //   onExit: (err: any, metadata: any) => this.onExit(err, metadata),
-    //   onEvent: (eventName: string, metadata: any) =>
-    //     this.onEvent(eventName, metadata),
-    //   onLoad: () => this.onLoad(),
-    //   selectAccount: this.selectAccount,
-    //   token: this.token || undefined,
-    //   webhook: this.webhook || undefined,
-    //   receivedRedirectUri: this.receivedRedirectUri,
-    // });
-    this.disabledButton = true;
-    this.plaidLinkHandler = undefined
+    let handler: PlaidLinkHandler = await this.plaidLinkLoader.createPlaid({
+      env: this.env,
+      key: this.publicKey,
+      product: this.product,
+      apiVersion: 'v2',
+      clientName: this.clientName,
+      countryCodes: this.countryCodes,
+      onSuccess: (public_token: string, metadata: any) =>
+        this.onSuccess(public_token, metadata),
+      onExit: (err: any, metadata: any) => this.onExit(err, metadata),
+      onEvent: (eventName: string, metadata: any) =>
+        this.onEvent(eventName, metadata),
+      onLoad: () => this.onLoad(),
+      selectAccount: this.selectAccount,
+      token: this.token || undefined,
+      webhook: this.webhook || undefined,
+      receivedRedirectUri: this.receivedRedirectUri,
+    });
+    this.disabledButton = false;
+    this.plaidLinkHandler = handler;
   }
 
   public onExit(error: PlaidErrorObject, metadata: PlaidErrorMetadata) {
