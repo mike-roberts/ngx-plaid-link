@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { PlaidConfig } from './interfaces';
 import { PlaidLinkHandler } from './ngx-plaid-link-handler';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class NgxPlaidLinkService {
   private loaded?: Promise<void>;
 

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  plaidPublicKey: process.env['PROD_PLAID_PUBLIC_KEY'],
+  plaidPublicKey: "b114b6aee9b927e1e20badfcf5343e",
 };

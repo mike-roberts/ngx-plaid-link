@@ -3,6 +3,7 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
+  inject,
   Input,
   Output,
 } from '@angular/core';
@@ -28,6 +29,10 @@ export interface ICustomWindow extends Window {
   };
 }
 
+// const getLinkService = () => {
+//   return inject(NgxPlaidLinkService);
+// }
+
 @Directive({
   selector: '[ngxPlaidLink]',
 })
@@ -41,6 +46,7 @@ export class NgxPlaidLinkDirective {
   @Input() clientName: string = '';
 
   @HostBinding('disabled') disabledButton: boolean;
+  // private plaidLinkLoader = getLinkService();
 
   private plaidLinkHandler?: PlaidLinkHandler;
   private defaultProps = {
@@ -68,31 +74,31 @@ export class NgxPlaidLinkDirective {
   @Input() countryCodes?: string[] = this.defaultProps.countryCodes;
   @Input() receivedRedirectUri?: string = this.defaultProps.receivedRedirectUri;
 
-  constructor(private plaidLinkLoader: NgxPlaidLinkService) {
+  constructor() {
     this.disabledButton = true;
   }
 
   async ngOnInit() {
-    let handler: PlaidLinkHandler = await this.plaidLinkLoader.createPlaid({
-      env: this.env,
-      key: this.publicKey,
-      product: this.product,
-      apiVersion: 'v2',
-      clientName: this.clientName,
-      countryCodes: this.countryCodes,
-      onSuccess: (public_token: string, metadata: any) =>
-        this.onSuccess(public_token, metadata),
-      onExit: (err: any, metadata: any) => this.onExit(err, metadata),
-      onEvent: (eventName: string, metadata: any) =>
-        this.onEvent(eventName, metadata),
-      onLoad: () => this.onLoad(),
-      selectAccount: this.selectAccount,
-      token: this.token || undefined,
-      webhook: this.webhook || undefined,
-      receivedRedirectUri: this.receivedRedirectUri,
-    });
-    this.disabledButton = false;
-    this.plaidLinkHandler = handler;
+    // let handler: PlaidLinkHandler = await this.plaidLinkLoader.createPlaid({
+    //   env: this.env,
+    //   key: this.publicKey,
+    //   product: this.product,
+    //   apiVersion: 'v2',
+    //   clientName: this.clientName,
+    //   countryCodes: this.countryCodes,
+    //   onSuccess: (public_token: string, metadata: any) =>
+    //     this.onSuccess(public_token, metadata),
+    //   onExit: (err: any, metadata: any) => this.onExit(err, metadata),
+    //   onEvent: (eventName: string, metadata: any) =>
+    //     this.onEvent(eventName, metadata),
+    //   onLoad: () => this.onLoad(),
+    //   selectAccount: this.selectAccount,
+    //   token: this.token || undefined,
+    //   webhook: this.webhook || undefined,
+    //   receivedRedirectUri: this.receivedRedirectUri,
+    // });
+    this.disabledButton = true;
+    this.plaidLinkHandler = undefined
   }
 
   public onExit(error: PlaidErrorObject, metadata: PlaidErrorMetadata) {
