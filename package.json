@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "package": "cd projects/ngx-plaid-link && ng-packagr -p ng-package.json",
+    "pack-dist": "cd projects/ngx-plaid-link && npm pack ./dist/ngx-plaid-link",
+    "publish-dist": "cd projects/ngx-plaid-link && npm publish ./dist/ngx-plaid-link"
   },
   "private": true,
   "dependencies": {
