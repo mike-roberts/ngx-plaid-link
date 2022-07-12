@@ -66,17 +66,21 @@ export interface PlaidEventMetadata {
 export interface PlaidConfig {
   apiVersion?: string;
   clientName?: string;
-  env: string;
+  env?: string;
   key?: string;
   onLoad?: Function;
   onSuccess: Function;
   onExit: Function;
   onEvent?: Function;
-  product: Array<string>;
+  product?: Array<string>;
   selectAccount?: boolean;
   token?: string;
   webhook?: string;
   countryCodes?: string[];
   receivedRedirectUri?: string;
   isWebview?: boolean;
+}
+
+export interface PlaidExitArgs {
+  force?: boolean;
 }

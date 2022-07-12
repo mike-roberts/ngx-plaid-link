@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { PlaidLinkHandler } from './ngx-plaid-link-handler';
 import {
   PlaidErrorMetadata,
@@ -24,7 +24,7 @@ export interface ICustomWindow extends Window {
 @Directive({
   selector: '[ngxPlaidLink]'
 })
-export class NgxPlaidLinkDirective {
+export class NgxPlaidLinkDirective implements OnInit, OnDestroy {
   @Output() Event: EventEmitter<PlaidOnEventArgs> = new EventEmitter();
   @Output() Click: EventEmitter<any> = new EventEmitter();
   @Output() Load: EventEmitter<any> = new EventEmitter();
@@ -43,7 +43,7 @@ export class NgxPlaidLinkDirective {
     institution: null,
     selectAccount: false,
     publicKey: null,
-    token: null,
+    token: undefined,
     webhook: "",
     product: ["auth"],
     countryCodes: ["US"],
@@ -82,13 +82,17 @@ export class NgxPlaidLinkDirective {
         onEvent: (eventName, metadata) => this.onEvent(eventName, metadata),
         onLoad: () => this.onLoad(),
         selectAccount: this.selectAccount,
-        token: this.token || null,
-        webhook: this.webhook || null,
+        token: this.token || undefined,
+        webhook: this.webhook || undefined,
         receivedRedirectUri: this.receivedRedirectUri,
         isWebview: this.isWebview
       });
     this.disabledButton = false;
     this.plaidLinkHandler = handler;
+  }
+
+  ngOnDestroy(): void {
+    this.plaidLinkHandler.destroy();
   }
 
   public onExit(error: PlaidErrorObject, metadata: PlaidErrorMetadata) {
@@ -107,7 +111,7 @@ export class NgxPlaidLinkDirective {
   onClick($event) {
     this.Click.emit($event);
     // Open to a specific institution if necessary;
-    const institution = this.institution || null;
+    const institution = this.institution || undefined;
     if (this.plaidLinkHandler) {
       this.plaidLinkHandler.open(institution);
     }
