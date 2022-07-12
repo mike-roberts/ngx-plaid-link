@@ -80,3 +80,7 @@ export interface PlaidConfig {
   receivedRedirectUri?: string;
   isWebview?: boolean;
 }
+
+export interface PlaidExitArgs {
+  force?: boolean;
+}
