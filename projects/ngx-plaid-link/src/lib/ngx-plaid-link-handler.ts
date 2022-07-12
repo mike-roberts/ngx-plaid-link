@@ -1,4 +1,4 @@
-import { PlaidConfig, PlaidExitArgs } from './interfaces';
+import { PlaidCreateConfig, PlaidExitArgs } from './interfaces';
 
 declare let Plaid: any;
 
@@ -10,9 +10,9 @@ export class PlaidLinkHandler {
 
   /**
    * Constructor configures the Plaid Link handler with given config options.
-   * @param PlaidConfig config
+   * @param PlaidCreateConfig config
    */
-  constructor(config: PlaidConfig) {
+  constructor(config: PlaidCreateConfig) {
     this.plaidLink = Plaid.create(config);
   }
 

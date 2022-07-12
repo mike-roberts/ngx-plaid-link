@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlaidConfig } from './interfaces';
+import { PlaidCreateConfig } from './interfaces';
 import { PlaidLinkHandler } from './ngx-plaid-link-handler';
 
 @Injectable({providedIn: 'root'})
@@ -10,10 +10,10 @@ export class NgxPlaidLinkService {
 
   /**
    * Create a Plaid Link instance as soon as Plaid Link has loaded.
-   * @param PlaidConfig config
+   * @param PlaidCreateOptions config
    * @returns Promise<PlaidLinkHandler>
    */
-  public createPlaid(config: PlaidConfig): Promise<PlaidLinkHandler> {
+  public createPlaid(config: PlaidCreateConfig): Promise<PlaidLinkHandler> {
     return this.loadPlaid().then(() => {
       return new PlaidLinkHandler(config);
     });

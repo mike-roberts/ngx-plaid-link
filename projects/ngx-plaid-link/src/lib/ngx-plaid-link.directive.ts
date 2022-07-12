@@ -3,7 +3,6 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
-  inject,
   Input,
   Output,
 } from '@angular/core';
@@ -29,10 +28,6 @@ export interface ICustomWindow extends Window {
   };
 }
 
-// const getLinkService = () => {
-//   return inject(NgxPlaidLinkService);
-// }
-
 @Directive({
   selector: '[ngxPlaidLink]',
 })
@@ -46,33 +41,30 @@ export class NgxPlaidLinkDirective {
   @Input() clientName: string = '';
 
   @HostBinding('disabled') disabledButton: boolean;
-  // private plaidLinkLoader = getLinkService();
 
   private plaidLinkHandler?: PlaidLinkHandler;
   private defaultProps = {
-    apiVersion: 'v2',
-    env: 'sandbox',
     institution: undefined,
     selectAccount: false,
     publicKey: undefined,
     token: undefined,
     webhook: '',
     product: ['auth'],
-    countryCodes: ['US'],
+  
     receivedRedirectUri: undefined,
     isWebview: false,
   };
 
   @Input() publicKey?: string = this.defaultProps.publicKey;
-  @Input() apiVersion?: string = this.defaultProps.apiVersion;
-  @Input() env: string = this.defaultProps.env;
+  @Input() apiVersion?: string;
+  @Input() env?: string;
   @Input() institution?: string = this.defaultProps.institution;
-  @Input() product: Array<string> = this.defaultProps.product;
+  @Input() product?: Array<string> = this.defaultProps.product;
   @Input() selectAccount?: boolean = this.defaultProps.selectAccount;
   @Input() token?: string = this.defaultProps.token;
   @Input() webhook?: string = this.defaultProps.webhook;
-  @Input() countryCodes?: string[] = this.defaultProps.countryCodes;
-  @Input() receivedRedirectUri?: string = this.defaultProps.receivedRedirectUri;
+  @Input() countryCodes?: string[];
+  @Input() receivedRedirectUri?: string;
 
   constructor(private plaidLinkLoader: NgxPlaidLinkService) {
     this.disabledButton = true;
