@@ -43,7 +43,7 @@ export class NgxPlaidLinkDirective implements OnInit, OnDestroy {
     institution: null,
     selectAccount: false,
     publicKey: null,
-    token: null,
+    token: undefined,
     webhook: "",
     product: ["auth"],
     countryCodes: ["US"],
@@ -77,13 +77,14 @@ export class NgxPlaidLinkDirective implements OnInit, OnDestroy {
         apiVersion: "v2",
         clientName: this.clientName,
         countryCodes: this.countryCodes,
+        institution: this.institution || undefined,
         onSuccess: (public_token, metadata) => this.onSuccess(public_token, metadata),
         onExit: (err, metadata) => this.onExit(err, metadata),
         onEvent: (eventName, metadata) => this.onEvent(eventName, metadata),
         onLoad: () => this.onLoad(),
         selectAccount: this.selectAccount,
-        token: this.token || null,
-        webhook: this.webhook || null,
+        token: this.token || undefined,
+        webhook: this.webhook || undefined,
         receivedRedirectUri: this.receivedRedirectUri,
         isWebview: this.isWebview
       });
@@ -111,7 +112,7 @@ export class NgxPlaidLinkDirective implements OnInit, OnDestroy {
   onClick($event) {
     this.Click.emit($event);
     // Open to a specific institution if necessary;
-    const institution = this.institution || null;
+    const institution = this.institution || undefined;
     if (this.plaidLinkHandler) {
       this.plaidLinkHandler.open(institution);
     }
