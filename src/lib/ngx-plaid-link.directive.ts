@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
+import { Directive, EventEmitter, HostBinding, HostListener, Input, Output, OnInit, OnDestroy } from '@angular/core';
 import { PlaidLinkHandler } from './ngx-plaid-link-handler';
 import {
   PlaidErrorMetadata,
@@ -24,7 +24,7 @@ export interface ICustomWindow extends Window {
 @Directive({
   selector: '[ngxPlaidLink]'
 })
-export class NgxPlaidLinkDirective {
+export class NgxPlaidLinkDirective implements OnInit, OnDestroy {
   @Output() Event: EventEmitter<PlaidOnEventArgs> = new EventEmitter();
   @Output() Click: EventEmitter<any> = new EventEmitter();
   @Output() Load: EventEmitter<any> = new EventEmitter();
@@ -89,6 +89,10 @@ export class NgxPlaidLinkDirective {
       });
     this.disabledButton = false;
     this.plaidLinkHandler = handler;
+  }
+
+  public ngOnDestroy(): void {
+    this.plaidLinkHandler.destroy();
   }
 
   public onExit(error: PlaidErrorObject, metadata: PlaidErrorMetadata) {
