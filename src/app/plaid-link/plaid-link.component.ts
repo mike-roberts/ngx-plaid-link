@@ -22,7 +22,7 @@ export class PlaidLinkComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // Make request to backend...
-    setTimeout(() => this.enableButton(), 3000);
+    setTimeout(() => this.enableButton(), 500);
   }
 
   enableButton() {

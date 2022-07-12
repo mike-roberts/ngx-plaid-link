@@ -28,7 +28,7 @@ export class PlaidLinkHandler {
    * Closes the currently open Plaid Link window if any.
    */
   public exit(options?: PlaidExitArgs): void {
-    this.plaidLink.exit();
+    this.plaidLink.exit(options);
   }
 
   /**
