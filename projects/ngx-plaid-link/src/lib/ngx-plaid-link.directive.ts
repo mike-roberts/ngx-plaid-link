@@ -78,6 +78,7 @@ export class NgxPlaidLinkDirective {
       apiVersion: 'v2',
       clientName: this.clientName,
       countryCodes: this.countryCodes,
+      instituion: this.institution,
       onSuccess: (public_token: string, metadata: any) =>
         this.onSuccess(public_token, metadata),
       onExit: (err: any, metadata: any) => this.onExit(err, metadata),
