@@ -1,9 +1,8 @@
-import { PlaidConfig } from './interfaces';
+import { PlaidCreateConfig, PlaidExitArgs } from './interfaces';
 
 declare let Plaid: any;
 
 export class PlaidLinkHandler {
-
   /**
    * Holds the Plaid Link instance.
    */
@@ -11,9 +10,9 @@ export class PlaidLinkHandler {
 
   /**
    * Constructor configures the Plaid Link handler with given config options.
-   * @param PlaidConfig config
+   * @param PlaidCreateConfig config
    */
-  constructor(config: PlaidConfig) {
+  constructor(config: PlaidCreateConfig) {
     this.plaidLink = Plaid.create(config);
   }
 
@@ -28,8 +27,14 @@ export class PlaidLinkHandler {
   /**
    * Closes the currently open Plaid Link window if any.
    */
-  public exit(): void {
-    this.plaidLink.exit();
+  public exit(options?: PlaidExitArgs): void {
+    this.plaidLink.exit(options);
   }
 
+  /**
+   * Destroys Link Handler instance and removes all DOM artifacts.
+   */
+  public destroy(): void {
+    this.plaidLink.destroy();
+  }
 }

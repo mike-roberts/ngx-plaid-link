@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
-import { PlaidConfig } from './interfaces';
+import { PlaidCreateConfig } from './interfaces';
 import { PlaidLinkHandler } from './ngx-plaid-link-handler';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class NgxPlaidLinkService {
+  private loaded?: Promise<void>;
 
-  private loaded: Promise<void>;
-
-  constructor() { }
+  constructor() {}
 
   /**
    * Create a Plaid Link instance as soon as Plaid Link has loaded.
-   * @param PlaidConfig config
+   * @param PlaidCreateOptions config
    * @returns Promise<PlaidLinkHandler>
    */
-  public createPlaid(config: PlaidConfig): Promise<PlaidLinkHandler> {
+  public createPlaid(config: PlaidCreateConfig): Promise<PlaidLinkHandler> {
     return this.loadPlaid().then(() => {
       return new PlaidLinkHandler(config);
     });
@@ -33,7 +32,10 @@ export class NgxPlaidLinkService {
         script.onerror = (e: any) => reject(e);
         if (script.readyState) {
           script.onreadystatechange = () => {
-            if (script.readyState === 'loaded' || script.readyState === 'complete') {
+            if (
+              script.readyState === 'loaded' ||
+              script.readyState === 'complete'
+            ) {
               script.onreadystatechange = null;
               resolve();
             }
@@ -49,5 +51,4 @@ export class NgxPlaidLinkService {
 
     return this.loaded;
   }
-
 }

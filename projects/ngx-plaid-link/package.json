@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "name": "ngx-plaid-link",
+  "description": "Angular Plaid Link Directive & Button Component",
+  "version": "14.0.0",
+  "author": {
+    "name": "Mike Roberts",
+    "url": "https://mikeroberts.engineer"
+  },
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json",
+    "watch": "ng-packagr -p ng-package.json -w",
+    "pack-dist": "npm pack ./dist/ngx-plaid-link",
+    "publish-dist": "npm publish ./dist/ngx-plaid-link"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/mike-roberts/ngx-plaid-link",
+  "bugs": {
+    "url": "https://github.com/mike-roberts/ngx-plaid-link/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mike-roberts/ngx-plaid-link"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0"
+  },
+  "devDependencies": {
+    "ng-packagr": "^14.0.3"
+  }
+}

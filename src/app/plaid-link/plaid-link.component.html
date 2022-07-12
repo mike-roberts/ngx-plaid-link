@@ -1,0 +1,10 @@
+<div *ngIf="!tokenFetched" class="lds-ring">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<button *ngIf="tokenFetched" ngxPlaidLink [token]="linkToken" (Success)="onSuccess($event)" (Exit)="onExit($event)"
+  (Event)="onEvent($event)" (Load)="onLoad($event)" (Click)="onClick($event)">
+  Launch Plaid Link
+</button>
