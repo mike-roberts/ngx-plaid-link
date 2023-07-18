@@ -78,7 +78,7 @@ export interface LegacyPlaidConfig {
   onEvent?: Function;
   product?: Array<string>;
   selectAccount?: boolean;
-  instituion?: string;
+  institution?: string;
   token?: string;
   webhook?: string;
   countryCodes?: string[];
