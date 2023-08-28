@@ -39,10 +39,8 @@ export class AppModule {}
 
 ```html
 <button ngxPlaidLink
-  env="sandbox"
-  publicKey="YOURPUBLICKEY"
-  institution=""
-  [countryCodes]="['US', 'CA', 'GB']"
+   *ngIf="plaidToken"
+  [token]="plaidToken"
   (Success)="onPlaidSuccess($event)"
   (Exit)="onPlaidExit($event)"
   (Load)="onPlaidLoad($event)"
@@ -55,10 +53,8 @@ export class AppModule {}
 
 ```html
 <mr-ngx-plaid-link-button
-  env="sandbox"
-  publicKey="YOURPUBLICKEY"
-  institution=""
-  [countryCodes]="['US', 'CA', 'GB']"
+  *ngIf="plaidToken"
+  [token]="plaidToken"
   (Success)="onPlaidSuccess($event)"
   (Exit)="onPlaidExit($event)"
   (Load)="onPlaidLoad($event)"
